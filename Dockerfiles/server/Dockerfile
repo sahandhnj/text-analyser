@@ -1,9 +1,11 @@
 FROM golang
 
-WORKDIR /go/src/github.com/sahandhnj/text-analyser
-COPY . .
-RUN go get ./... 
-RUN go build -o server .
+ENV RUNTIME /runtime
 
-CMD [ "server" ]
-EXPOSE 3005
+WORKDIR /go/src/github.com/sahandhnj/text-analyser
+
+COPY src/. .
+RUN go get ./... 
+RUN go build -o $RUNTIME/server .
+
+CMD [ "/runtime/server" ]
