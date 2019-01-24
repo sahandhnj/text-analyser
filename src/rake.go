@@ -1,8 +1,8 @@
 package main
 
 import (
-	rake "github.com/sahandhnj/plekTextAnalyser/src/rakeimpl"
-	"github.com/sahandhnj/text-analyser/types"
+	rake "github.com/sahandhnj/text-analyser/src/rakeimpl"
+	"github.com/sahandhnj/text-analyser/src/types"
 )
 
 func rakeIt(text string, lang rake.LANG) []types.Token {

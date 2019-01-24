@@ -1,7 +1,12 @@
 package types
 
+import (
+	rake "github.com/sahandhnj/text-analyser/src/rakeimpl"
+)
+
 type Req struct {
-	Text   string `json:"text"`
+	Text   string    `json:"text"`
+	Lang   rake.LANG `json:"Lang"`
 	Parsed string
 }
 

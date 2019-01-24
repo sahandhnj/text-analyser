@@ -6,7 +6,7 @@ import (
 	"net/http"
 
 	strip "github.com/grokify/html-strip-tags-go"
-	"github.com/sahandhnj/text-analyser/types"
+	"github.com/sahandhnj/text-analyser/src/types"
 )
 
 const TOKEN = "Cjzvcc3sYcm12Eye2r4pQsS2pezphs"
