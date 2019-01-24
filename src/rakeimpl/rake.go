@@ -10,7 +10,7 @@ type LANG string
 
 const (
 	LANG_EN LANG = "EN"
-	LANG_DE LANG = "DE"
+	LANG_DE LANG = "NL"
 )
 
 //IsNumber returns true if the supplied string is a number
