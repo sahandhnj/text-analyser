@@ -6,7 +6,7 @@ import (
 
 	corenlp "github.com/hironobu-s/go-corenlp"
 	"github.com/hironobu-s/go-corenlp/connector"
-	"github.com/sahandhnj/text-analyser/types"
+	"github.com/sahandhnj/text-analyser/src/types"
 )
 
 func getContext(text string) []string {
