@@ -3,8 +3,8 @@ services:
   server:
     build:
       context: ./
-      dockerfile: Dockerfiles/corenlp/Dockerfile
-    container_name: corenlp
+      dockerfile: Dockerfiles/server/Dockerfile
+    container_name: text-anlyser-server
     restart: unless-stopped
     ports:
       - '3005:3005'
@@ -13,8 +13,11 @@ services:
   corenlp:
     build:
       context: ./
-      dockerfile: Dockerfiles/server/Dockerfile
-    container_name: text-anlyser-server
+      dockerfile: Dockerfiles/corenlp/Dockerfile
+    container_name: corenlp
     restart: unless-stopped
     ports:
       - '9000:9000'
+
+
+      
