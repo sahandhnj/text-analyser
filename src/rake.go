@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/sahandhnj/text-analyser/src/rake"
+	rake "github.com/sahandhnj/plekTextAnalyser/src/rakeimpl"
 	"github.com/sahandhnj/text-analyser/types"
 )
 
