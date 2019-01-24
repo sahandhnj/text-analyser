@@ -6,6 +6,7 @@ import (
 
 	corenlp "github.com/hironobu-s/go-corenlp"
 	"github.com/hironobu-s/go-corenlp/connector"
+	rake "github.com/sahandhnj/text-analyser/src/rakeimpl"
 	"github.com/sahandhnj/text-analyser/src/types"
 )
 
@@ -49,7 +50,11 @@ func getContext(text string) []string {
 	return contexts
 }
 
-func nlp(text string) []types.NerToken {
+func nlp(text string, lang rake.LANG) []types.NerToken {
+	if lang != rake.LANG_EN {
+		return []types.NerToken{}
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 120*time.Second)
 	defer cancel()
 
