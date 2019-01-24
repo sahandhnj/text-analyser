@@ -1,12 +1,16 @@
 package main
 
 import (
-	rake "github.com/Obaied/RAKE.Go"
+	"github.com/sahandhnj/plekTextAnalyser/src/rake"
 	"github.com/sahandhnj/text-analyser/types"
 )
 
-func rakeIt(text string) []types.Token {
-	candidates := rake.RunRake(text)
+func rakeIt(text string, lang rake.LANG) []types.Token {
+	if lang == "" {
+		lang = rake.LANG_EN
+	}
+
+	candidates := rake.RunRake(text, lang)
 	tokens := make([]types.Token, 0)
 
 	var limit float64

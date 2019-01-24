@@ -36,7 +36,7 @@ func analyseRequest(w http.ResponseWriter, r *http.Request) {
 	}
 	req.Parsed = strip.StripTags(req.Text)
 	ners := nlp(req.Parsed)
-	tokens := rakeIt(req.Parsed)
+	tokens := rakeIt(req.Parsed, req.Lang)
 
 	candidates := make([]string, 0)
 	for _, ner := range ners {
