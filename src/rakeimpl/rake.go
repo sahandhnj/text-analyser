@@ -10,7 +10,7 @@ type LANG string
 
 const (
 	LANG_EN LANG = "EN"
-	LANG_DE LANG = "NL"
+	LANG_NL LANG = "NL"
 )
 
 //IsNumber returns true if the supplied string is a number
@@ -153,8 +153,8 @@ func RunRakeI18N(text string, stopWords []string, lang LANG) PairList {
 	switch lang {
 	case LANG_EN:
 		words = EnglishStopWordsSlice
-	case LANG_DE:
-		words = DuthchStopWordsSlice
+	case LANG_NL:
+		words = append(DuthchStopWordsSlice, DuthchStopWordsSlice2...)
 	}
 
 	if len(stopWords) > 0 {
@@ -170,11 +170,87 @@ func RunRakeI18N(text string, stopWords []string, lang LANG) PairList {
 
 	//Build keyword candidates and sort it (see sort.go)
 	keywordCandidates := GenerateCandidateKeywordScores(phraseList, wordScores)
+
+	if lang == LANG_NL{
+		// var newList map[string]float64
+		newList := findCommonWords(keywordCandidates, words)
+		keywordCandidates = newList
+	}
+
 	sorted := reverseSortByValue(keywordCandidates)
 	return sorted
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }
 
 // RunRake wraps RunRakeI18N to respect API
 func RunRake(text string, lang LANG) PairList {
 	return RunRakeI18N(text, []string{}, lang)
+}
+
+func findCommonWords(keywordCandidates map[string]float64, stopWords []string) map[string]float64 {
+	var alreadyCompared []string
+	result := make(map[string]float64)
+	for phrase1, score1 := range keywordCandidates {
+		words1 := strings.Fields(phrase1)
+
+		for phrase2, score2 := range keywordCandidates {
+			if phrase1 != phrase2 {
+				if !contains(alreadyCompared, phrase1) {
+					words2 := strings.Fields(phrase2)
+					same := getSameWords(words1, words2, stopWords)
+
+					if len(same) > 0 {
+						sameStr := strings.Join(same[:], " ")
+						sameStr = strings.Trim(sameStr, " ")
+
+						if val, ok := result[sameStr]; ok {
+							result[sameStr] = val + score1 + score2
+						} else {
+							result[sameStr] = score1 + score2
+						}
+					}
+				}
+			}
+		}
+
+		alreadyCompared = append(alreadyCompared, phrase1)
+	}
+
+	return result
+}
+
+func getSameWords(words1 []string, words2 []string, stopWords []string) []string {
+	result := []string{}
+	phrase := ""
+	end := false
+
+	for v := range words1 {
+		for l := range words2 {
+			if contains(stopWords, words1[v]) {
+				end = true
+				continue
+			}
+
+			if words1[v] == words2[l] {
+				phrase = phrase + " " + words1[v]
+			} else {
+				end = true
+			}
+
+			if end == true && phrase != "" {
+				result = append(result, phrase)
+				phrase = ""
+			}
+		}
+	}
+
+	return result
 }
