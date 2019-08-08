@@ -1,4 +1,6 @@
-## PLekTextAnalyser
+## TextAnalyser
+
+Text Analyser analyse a piece of text and returns the most important words and phrases with their corresponding score.
 
 token= Cjzvcc3sYcm12Eye2r4pQsS2pezphs
 
